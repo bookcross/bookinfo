@@ -1,0 +1,49 @@
+package com.trembear.bookinfo;
+
+import com.trembear.bookinfo.dao.BookInfoDao;
+import com.trembear.bookinfo.entity.BookInfo;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.awt.print.Book;
+import java.util.List;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class BookinfoApplicationTests {
+    @Autowired
+    private BookInfoDao demoDao;
+    @Test
+    public void contextLoads() {
+//        BookInfo bookInfo=new BookInfo();
+//        bookInfo.setId(1L);
+//        bookInfo.setAuthor("金庸");
+//        bookInfo.setBookName("射雕英雄传");
+//        demoDao.save(bookInfo);
+//        bookInfo.setId(2L);
+//        bookInfo.setAuthor("金庸");
+//        bookInfo.setBookName("天龙八部");
+//        demoDao.save(bookInfo);
+//        bookInfo.setId(3L);
+//        bookInfo.setAuthor("金庸");
+//        bookInfo.setBookName("鹿鼎记");
+//        demoDao.save(bookInfo);
+//        bookInfo.setId(4L);
+//        bookInfo.setAuthor("金庸");
+//        bookInfo.setBookName("神雕侠侣");
+//        demoDao.save(bookInfo);
+        System.out.println("总条数"+demoDao.recordTotal(null));
+        List<BookInfo> list= demoDao.pageList(1,2,null,new Sort(Sort.Direction.DESC, "id"));
+        for(BookInfo bookInfo1:list){
+            System.out.println(bookInfo1.getId()+bookInfo1.getBookName());
+        }
+//        bookInfo.setBookName("天龙八部");
+//        demoDao.updateDemo(bookInfo);
+//        System.out.println(demoDao.findDemoById(1L).getBookName());
+    }
+
+}
