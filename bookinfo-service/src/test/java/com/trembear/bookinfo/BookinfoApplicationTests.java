@@ -10,7 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.awt.print.Book;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,7 +38,9 @@ public class BookinfoApplicationTests {
 //        bookInfo.setAuthor("金庸");
 //        bookInfo.setBookName("神雕侠侣");
 //        demoDao.save(bookInfo);
-        System.out.println("总条数"+demoDao.recordTotal(null));
+        Map map=new HashMap<String, String>();
+        map.put("bookName","神雕侠侣");
+        System.out.println("总条数"+demoDao.recordTotal(map));
         List<BookInfo> list= demoDao.pageList(1,2,null,new Sort(Sort.Direction.DESC, "id"));
         for(BookInfo bookInfo1:list){
             System.out.println(bookInfo1.getId()+bookInfo1.getBookName());

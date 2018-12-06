@@ -1,4 +1,4 @@
-package com.trembear.bookinfo.support;
+package com.trembear.bookinfo.common.vo;
 
 import java.util.Arrays;
 import java.util.Collection;
