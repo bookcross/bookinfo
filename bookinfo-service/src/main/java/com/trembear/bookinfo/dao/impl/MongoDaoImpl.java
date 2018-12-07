@@ -186,6 +186,7 @@ public class MongoDaoImpl<T> implements MongoDao<T> {
                 }
                 if (excludeFields != null && excludeFields.size() > 0){
                     Field fields = query.fields();
+
                     excludeFields.stream().forEach(t -> fields.exclude(t));
                 }
                 if (sort != null){
