@@ -2,8 +2,10 @@ package com.trembear.bookinfo.controller;
 
 import com.trembear.bookinfo.common.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
+import com.trembear.bookinfo.service.BookInfoService;
 import com.trembear.bookinfoapi.dto.BookDetailDto;
 import com.trembear.bookinfoapi.dto.BookDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/bookInfo")
 public class BookInfoController {
+    @Autowired
+    BookInfoService bookInfoService;
    /**
     * @author junwei.xiong
     * Description  //TODO getPageDetail
@@ -29,7 +33,7 @@ public class BookInfoController {
                                     @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-        return null;
+        return bookInfoService.getPageDetail(type,pageNum,pageSize);
     }
     /**
      * @author junwei.xiong
@@ -40,11 +44,11 @@ public class BookInfoController {
      **/
     @RequestMapping("/searchBook")
     public PageDetail searchBook(
-            @RequestParam(value = "field") String field,
+            @RequestParam(value = "field") Integer field,
             @RequestParam(value = "keyword") String keyword,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        return null;
+        return bookInfoService.searchBook(field,keyword,pageNum,pageSize);
     }
     /**
      * @author junwei.xiong
@@ -55,7 +59,7 @@ public class BookInfoController {
      **/
     @RequestMapping("/getBookDetail")
     public BookDetailDto getBookDetail(@RequestParam(value = "id")Integer id){
-        return null;
+        return bookInfoService.getBookDetail(id);
     }
     /**
      * @author junwei.xiong
@@ -66,7 +70,7 @@ public class BookInfoController {
      **/
     @RequestMapping("/addBook")
     public RestFulVO addBook(@RequestBody BookDto bookDto){
-        return null;
+        return bookInfoService.addBook(bookDto);
     }
     /**
      * @author junwei.xiong
@@ -76,8 +80,8 @@ public class BookInfoController {
      * @return com.trembear.bookinfo.common.vo.RestFulVO
      **/
     @RequestMapping("/deleteBook")
-    public RestFulVO deleteBook(@RequestParam(value = "id")Integer id){
-        return null;
+    public RestFulVO deleteBook(@RequestParam(value = "id")long id){
+        return bookInfoService.deleteBook(id);
     }
     /**
      * @author junwei.xiong
@@ -87,7 +91,7 @@ public class BookInfoController {
      * @return com.trembear.bookinfo.common.vo.RestFulVO
      **/
     @RequestMapping("/collect")
-    public RestFulVO collect(@RequestParam(value = "bookId")Integer bookId,@RequestParam(value = "userId")Integer userId,@RequestParam(value = "type")Integer type){
+    public RestFulVO collect(@RequestParam(value = "bookId")long bookId,@RequestParam(value = "userId")long userId,@RequestParam(value = "type")Integer type){
         return null;
     }
     /**
@@ -99,7 +103,7 @@ public class BookInfoController {
      **/
     @RequestMapping("/updateBook")
     public RestFulVO updateBook(@RequestBody BookDto bookDto){
-        return null;
+        return bookInfoService.updateBook(bookDto);
     }
 
 

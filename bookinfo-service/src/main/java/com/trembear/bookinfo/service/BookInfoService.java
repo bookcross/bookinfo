@@ -25,10 +25,10 @@ public interface BookInfoService {
       * updateBook
       */
      PageDetail<BookDto> getPageDetail(Integer type,Integer pageNum,Integer pageSize);
-     PageDetail<BookDto> searchBook( String field,String keyword, Integer pageNum,Integer pageSize);
-     BookDetailDto getBookDetail(Integer id);
+     PageDetail<BookDto> searchBook( Integer type,String keyword, Integer pageNum,Integer pageSize);
+     BookDetailDto getBookDetail(long id);
      RestFulVO<String> addBook(BookDto bookDto);
-     RestFulVO<String> deleteBook(Integer id);
+     RestFulVO<String> deleteBook(long id);
      RestFulVO<String> collect(Integer bookId,Integer userId,Integer type);
      RestFulVO<String> updateBook(BookDto bookDto);
 }
