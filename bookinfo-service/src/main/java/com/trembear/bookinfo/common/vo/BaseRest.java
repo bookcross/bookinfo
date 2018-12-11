@@ -59,7 +59,7 @@ public class BaseRest<T> {
      * @return
      */
     public RestFulVO restSimpleFault() {
-        return setSystemCode(SystemRest.ERROR.getCode());
+        return setSystemCode(SystemRest.UNKNOWN_ERROR.getCode());
     }
 
     /**

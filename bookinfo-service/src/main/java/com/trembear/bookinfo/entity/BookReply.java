@@ -14,10 +14,10 @@ import java.util.Date;
 @Document(collection = "ReplyDoc")
 public class BookReply {
     @Id
-    private Long id;
-    private Long parentId;
-    private Long bookId;
-    private Long senderId;
+    private long id;
+    private long parentId;
+    private long bookId;
+    private long senderId;
     private String senderName;
     private String acceptId;
     private String acceptName;

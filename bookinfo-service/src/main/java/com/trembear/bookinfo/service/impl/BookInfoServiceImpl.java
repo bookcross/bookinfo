@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,8 +39,14 @@ public class BookInfoServiceImpl
     private static String ISDELETE="isDelete";
     private static String BOOKNAME="bookName";
     private static String AUTHOR="author";
+    private static String COLLECT="BOOKCOLLECT_";
     @Autowired
     private BookInfoDao bookInfoDao;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 调用其他服务示例
@@ -99,7 +107,7 @@ public class BookInfoServiceImpl
          * 1、获取book信息
          * 2、获取评论信息
          * 3、获取漂流信息
-         *
+         * 4、从reids中获取是否收藏信息，存入字段
          */
 
         return null;
@@ -128,8 +136,15 @@ public class BookInfoServiceImpl
          * 2、key太多了到时候如何管理（比如清理删除）
          * 3、需要定时想数据库里统计，避免redis服务停止导致的数据丢失？
          */
-        return null;
+        if(type==BookInfoConst.YES) {
+            long result= redisTemplate.opsForSet().add(COLLECT+bookId,userId);
+            return new BaseRest().restSuccess("收藏成功");
+        }else{
+            long result=redisTemplate.opsForSet().remove(COLLECT+bookId,userId);
+            return new BaseRest().restSuccess("取消收藏成功");
+        }
     }
+
 
     @Override
     public RestFulVO updateBook(BookDto bookDto) {

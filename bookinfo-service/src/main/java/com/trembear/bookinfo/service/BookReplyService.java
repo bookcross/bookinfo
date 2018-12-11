@@ -22,4 +22,6 @@ public interface BookReplyService {
     RestFulVO<String> addBookReply(BookReplyDto bookReplyDto);
 
     RestFulVO<String> deleteBookReply(long id);
+
+    boolean addStar(float star,long bookId);
 }

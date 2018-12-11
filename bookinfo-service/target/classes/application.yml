@@ -19,3 +19,11 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 0
+sftp:
+  url: 172.93.42.240
+  port: 28592
+  username: root
+  password: xjw13579
+file:
+  path: /root/tale/resources/upload2
+  url: https://www.swapassn.com/upload2/

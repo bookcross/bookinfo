@@ -20,6 +20,16 @@ public class BookReplyDto {
     private String content;
     private Date createTime;
     private String isDelete;
+    private float star;
+
+    public float getStar() {
+        return star;
+    }
+
+    public void setStar(float star) {
+        this.star = star;
+    }
+
     private List<BookReplyDto> bookReplyDtos;
 
     public List<BookReplyDto> getBookReplyDtos() {
