@@ -19,6 +19,10 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 0
+#  datasource:
+#    url: jdbc:mysql://172.93.42.240:3306/bookcross?useSSL=false
+#    username: root
+#    password: xjw131579
 sftp:
   url: 172.93.42.240
   port: 28592
@@ -27,3 +31,23 @@ sftp:
 file:
   path: /root/tale/resources/upload2
   url: https://www.swapassn.com/upload2/
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      access-token-uri: http://localhost:1001/oauth/token
+      user-authorization-uri: http://localhost:1001/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:1001/user/me
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.trembear.entity
+#  configuration:
+#    map-underscore-to-camel-case: true
+cluster:
+  datasource:
+    url: jdbc:mysql://172.93.42.240:3306/bookcross?useSSL=false
+    username: root
+    password: xjw13579
+    driverClassName: com.mysql.jdbc.Driver

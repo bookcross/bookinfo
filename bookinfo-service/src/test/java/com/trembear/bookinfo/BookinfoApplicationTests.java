@@ -1,6 +1,7 @@
 package com.trembear.bookinfo;
 
 import com.trembear.bookinfo.config.RedisConfig;
+import com.trembear.bookinfo.dao.BCAdminMapper;
 import com.trembear.bookinfo.dao.BookInfoDao;
 import com.trembear.bookinfo.entity.BookInfo;
 import com.trembear.bookinfo.entity.BookReply;
@@ -30,21 +31,26 @@ import java.util.Map;
 public class BookinfoApplicationTests {
     @Autowired
     private BookInfoDao demoDao;
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private BCAdminMapper bcAdminMapper;
+
     @Test
     public void redisTest() {
 //        stringRedisTemplate.opsForValue().set("tom","123");
 //        Assert.assertEquals("123",stringRedisTemplate.opsForValue().get("tom"));
-        BookReply bf=new BookReply();
-        bf.setContent("射雕英雄传");
-        BookReplyDto bt=new BookReplyDto();
-        BeanUtils.copyProperties(bf,bt);
-        System.out.println(bf.getContent());
-        System.out.println(bt.getContent());
+//        BookReply bf=new BookReply();
+//        bf.setContent("射雕英雄传");
+//        BookReplyDto bt=new BookReplyDto();
+//        BeanUtils.copyProperties(bf,bt);
+//        System.out.println(bf.getContent());
+//        System.out.println(bt.getContent());
+        bcAdminMapper.selectByPrimaryKey(1);
     }
     //    @Test
     public void contextLoads() {

@@ -42,7 +42,6 @@ public class BookInfoServiceImpl
     private static String COLLECT="BOOKCOLLECT_";
     @Autowired
     private BookInfoDao bookInfoDao;
-
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
