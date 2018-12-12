@@ -51,3 +51,6 @@ cluster:
     username: root
     password: xjw13579
     driverClassName: com.mysql.jdbc.Driver
+logging:
+  level:
+    com.trembear.bookinfo.dao: debug
