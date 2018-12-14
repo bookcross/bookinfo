@@ -14,11 +14,11 @@ public class IDUtils {
     private static byte[] lock = new byte[0];
 
     // 位数，默认是8位
-    private final static long w = 100000000;
+    private final static Long w = 100000000L;
     private static SecureRandom random = new SecureRandom();
 
     public static String createID() {
-        long r = 0;
+        Long r = 0L;
         synchronized (lock) {
             r = (long) ((random.nextFloat() + 1) * w);
         }

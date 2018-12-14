@@ -58,7 +58,7 @@ public class BookInfoController {
      * @return com.trembear.bookinfoapi.dto.BookDetailDto
      **/
     @RequestMapping("/getBookDetail")
-    public BookDetailDto getBookDetail(@RequestParam(value = "id")Integer id){
+    public BookDetailDto getBookDetail(@RequestParam(value = "id")Long id){
         return bookInfoService.getBookDetail(id);
     }
     /**
@@ -70,6 +70,7 @@ public class BookInfoController {
      **/
     @RequestMapping("/addBook")
     public RestFulVO addBook(@RequestBody BookDto bookDto){
+        System.out.println(bookDto);
         return bookInfoService.addBook(bookDto);
     }
     /**
@@ -80,7 +81,7 @@ public class BookInfoController {
      * @return com.trembear.bookinfo.common.vo.RestFulVO
      **/
     @RequestMapping("/deleteBook")
-    public RestFulVO deleteBook(@RequestParam(value = "id")long id){
+    public RestFulVO deleteBook(@RequestParam(value = "id")Long id){
         return bookInfoService.deleteBook(id);
     }
     /**
@@ -91,7 +92,7 @@ public class BookInfoController {
      * @return com.trembear.bookinfo.common.vo.RestFulVO
      **/
     @RequestMapping("/collect")
-    public RestFulVO collect(@RequestParam(value = "bookId")long bookId,@RequestParam(value = "userId")long userId,@RequestParam(value = "type")Integer type){
+    public RestFulVO collect(@RequestParam(value = "bookId")Long bookId,@RequestParam(value = "userId")Long userId,@RequestParam(value = "type")Integer type){
         return null;
     }
     /**

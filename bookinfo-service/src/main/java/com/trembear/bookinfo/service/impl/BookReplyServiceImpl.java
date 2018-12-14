@@ -42,7 +42,7 @@ public class BookReplyServiceImpl implements BookReplyService {
     private BookInfoDao bookInfoDao;
 
     @Override
-    public PageDetail<BookReplyDto> getPageBookReplay(int pageNum, int pageSize, long bookId) {
+    public PageDetail<BookReplyDto> getPageBookReplay(int pageNum, int pageSize, Long bookId) {
         /**
          * 查找BOOKID下parent为O的前五个书评
          * 查找该书评下的所有回复
@@ -85,13 +85,13 @@ public class BookReplyServiceImpl implements BookReplyService {
     }
 
     @Override
-    public RestFulVO<String> deleteBookReply(long id) {
+    public RestFulVO<String> deleteBookReply(Long id) {
         bookReplyDao.delete(id);
         return new BaseRest().restSuccess("保存评论成功");
     }
 
     @Override
-    public boolean addStar(float star, long bookId) {
+    public boolean addStar(float star, Long bookId) {
         try {
             BookInfo bi = bookInfoDao.findById(bookId);
             bi.setStar(bi.getStar() + star);

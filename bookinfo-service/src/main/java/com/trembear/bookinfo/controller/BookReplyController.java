@@ -32,7 +32,7 @@ public class BookReplyController {
     @RequestMapping("/readAll")
     public PageDetail getPageBookReply(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                       @RequestParam(value = "bookId") long bookId){
+                                       @RequestParam(value = "bookId") Long bookId){
         return bookReplyService.getPageBookReplay(pageNum,pageSize,bookId);
     }
     /**
@@ -54,7 +54,7 @@ public class BookReplyController {
      * @return com.trembear.bookinfo.common.vo.RestFulVO
      **/
     @RequestMapping("/deleteBookReply")
-    public RestFulVO deleteBookReply(@RequestParam(value = "id")long id){
+    public RestFulVO deleteBookReply(@RequestParam(value = "id")Long id){
         return bookReplyService.deleteBookReply(id);
     }
 

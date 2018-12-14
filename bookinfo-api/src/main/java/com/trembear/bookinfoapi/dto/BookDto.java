@@ -1,6 +1,7 @@
 package com.trembear.bookinfoapi.dto;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * description 图书DTO
@@ -9,12 +10,22 @@ import java.util.Date;
  * since 2018-12-07 11:18
  */
 public class BookDto {
+    /**
+     *     bookName: "",
+     *     address: "",
+     *     addressJ: "",
+     *     addressW: "",
+     *     author: "",
+     *     picList:[],
+     *     innerPic: "",
+     *     describe: ""
+     */
     private Long id;
     private String bookName;
     //标题图
     private String bookHeadImg;
     //多图
-    private String bookPic;
+    private List<PicFileDto> picList;
     //简介
     private String bookConent;
     //书主
@@ -25,6 +36,10 @@ public class BookDto {
     private String type;
     //适合年龄
     private String suitbleAge;
+    //精度
+    private String addressJ;
+    //维度
+    private String addressW;
     //收藏数
     private Integer collectionNum;
     //评论数
@@ -66,12 +81,12 @@ public class BookDto {
         this.bookHeadImg = bookHeadImg;
     }
 
-    public String getBookPic() {
-        return bookPic;
+    public List<PicFileDto> getPicList() {
+        return picList;
     }
 
-    public void setBookPic(String bookPic) {
-        this.bookPic = bookPic;
+    public void setPicList( List<PicFileDto> picList) {
+        this.picList = picList;
     }
 
     public String getBookConent() {
@@ -184,5 +199,21 @@ public class BookDto {
 
     public void setCanLend(String canLend) {
         this.canLend = canLend;
+    }
+
+    public String getAddressJ() {
+        return addressJ;
+    }
+
+    public void setAddressJ(String addressJ) {
+        this.addressJ = addressJ;
+    }
+
+    public String getAddressW() {
+        return addressW;
+    }
+
+    public void setAddressW(String addressW) {
+        this.addressW = addressW;
     }
 }

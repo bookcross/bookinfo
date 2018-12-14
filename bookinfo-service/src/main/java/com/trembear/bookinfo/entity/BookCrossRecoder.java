@@ -1,5 +1,6 @@
 package com.trembear.bookinfo.entity;
 
+import com.trembear.bookinfo.annotation.AutoInc;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,14 +15,15 @@ import java.util.Date;
 @Document(collection = "recordDoc")
 public class BookCrossRecoder {
     @Id
-    private long id;
-    private long bookId;
+    @AutoInc
+    private Long id;
+    private Long bookId;
     private String name;
-    private long senderId;
+    private Long senderId;
     private String  senderJ;
     private String  senderW;
     private String senderAddress;
-    private long accepterId;
+    private Long accepterId;
     private String accepterJ;
     private String accepterW;
     private String accepterAddress;
@@ -78,19 +80,19 @@ public class BookCrossRecoder {
         this.accepterAddress = accepterAddress;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(long bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 
@@ -102,19 +104,19 @@ public class BookCrossRecoder {
         this.name = name;
     }
 
-    public long getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(long senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 
-    public long getAccepterId() {
+    public Long getAccepterId() {
         return accepterId;
     }
 
-    public void setAccepterId(long accepterId) {
+    public void setAccepterId(Long accepterId) {
         this.accepterId = accepterId;
     }
 

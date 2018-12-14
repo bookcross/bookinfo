@@ -1,5 +1,6 @@
 package com.trembear.bookinfo.entity;
 
+import com.trembear.bookinfo.annotation.AutoInc;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,10 +15,11 @@ import java.util.Date;
 @Document(collection = "ReplyDoc")
 public class BookReply {
     @Id
-    private long id;
-    private long parentId;
-    private long bookId;
-    private long senderId;
+    @AutoInc
+    private Long id;
+    private Long parentId;
+    private Long bookId;
+    private Long senderId;
     private String senderName;
     private String acceptId;
     private String acceptName;

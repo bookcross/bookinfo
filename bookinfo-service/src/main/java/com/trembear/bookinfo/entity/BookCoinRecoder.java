@@ -9,35 +9,35 @@ import java.util.Date;
  * since 2018-12-11 13:48
  */
 public class BookCoinRecoder {
-    private long id;
-    private long userId;
-    private long crossRecoderId;
+    private Long id;
+    private Long userId;
+    private Long crossRecoderId;
     private String type;//0 系统赠送，1 交易活动
     private Integer coin;
     private Integer total;
     private Date createTime;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getCrossRecoderId() {
+    public Long getCrossRecoderId() {
         return crossRecoderId;
     }
 
-    public void setCrossRecoderId(long crossRecoderId) {
+    public void setCrossRecoderId(Long crossRecoderId) {
         this.crossRecoderId = crossRecoderId;
     }
 

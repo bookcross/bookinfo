@@ -9,14 +9,14 @@ import java.util.Date;
  * since 2018-12-07 11:18
  */
 public class BookCrossRecoderDto {
-    private long id;
-    private long bookId;
+    private Long id;
+    private Long bookId;
     private String name;
-    private long senderId;
+    private Long senderId;
     private String  senderJ;
     private String  senderW;
     private String senderAddress;
-    private long accepterId;
+    private Long accepterId;
     private String accepterJ;
     private String accepterW;
     private String accepterAddress;
@@ -73,19 +73,19 @@ public class BookCrossRecoderDto {
         this.accepterAddress = accepterAddress;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(long bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 
@@ -97,19 +97,19 @@ public class BookCrossRecoderDto {
         this.name = name;
     }
 
-    public long getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(long senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 
-    public long getAccepterId() {
+    public Long getAccepterId() {
         return accepterId;
     }
 
-    public void setAccepterId(long accepterId) {
+    public void setAccepterId(Long accepterId) {
         this.accepterId = accepterId;
     }
 

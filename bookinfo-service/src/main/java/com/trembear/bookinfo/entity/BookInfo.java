@@ -1,5 +1,6 @@
 package com.trembear.bookinfo.entity;
 
+import com.trembear.bookinfo.annotation.AutoInc;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @Document(collection = "bookDoc")
 public class BookInfo {
     @Id
+    @AutoInc
     private Long id;
     private String bookName;
     //标题图

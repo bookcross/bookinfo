@@ -17,11 +17,11 @@ public interface BookReplyService {
      * addBookReply
      * deleteBookReply
      */
-    PageDetail<BookReplyDto> getPageBookReplay(int pageNum,int pageSize,long bookId);
+    PageDetail<BookReplyDto> getPageBookReplay(int pageNum,int pageSize,Long bookId);
 
     RestFulVO<String> addBookReply(BookReplyDto bookReplyDto);
 
-    RestFulVO<String> deleteBookReply(long id);
+    RestFulVO<String> deleteBookReply(Long id);
 
-    boolean addStar(float star,long bookId);
+    boolean addStar(float star,Long bookId);
 }

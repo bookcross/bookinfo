@@ -23,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.validation.constraints.AssertTrue;
 import java.awt.print.Book;
@@ -45,8 +46,33 @@ public class BookinfoApplicationTests {
 
     @Autowired
     private BCAdminMapper bcAdminMapper;
+@Test
+public void mongoTest(){
+    BookInfo bookInfo=new BookInfo();
+        bookInfo.setId(1L);
+        bookInfo.setAuthor("金庸");
+        bookInfo.setBookName("射雕英雄传");
+        demoDao.save(bookInfo);
+        bookInfo.setId(2L);
+        bookInfo.setAuthor("金庸");
+        bookInfo.setBookName("天龙八部");
+        demoDao.save(bookInfo);
+
+}
+
 
     @Test
+    public void bookTest(){
+//        Map condition = new HashMap<String, String>();
+//        condition.put("isDelete", "0");
+        List<BookInfo> list3 = demoDao.pageList(1, 2, null, new Sort(Sort.Direction.DESC, "id"));
+        for (BookInfo bookInfo:list3) {
+            demoDao.delete(bookInfo.getId());
+        }
+    }
+
+
+//    @Test
     public void redisTest() {
 //        stringRedisTemplate.opsForValue().set("tom","123");
 //        Assert.assertEquals("123",stringRedisTemplate.opsForValue().get("tom"));
@@ -69,13 +95,14 @@ public class BookinfoApplicationTests {
 //            bcAdmin.setType("0");
 //            bcAdminMapper.insert(bcAdmin);
 //        }
-
-
+       BCAdminExample bcAdminExample=new BCAdminExample();
+       BCAdminExample.Criteria criteria = bcAdminExample.createCriteria();
+        criteria.andAdminnameLike("tom");
         PageHelper.startPage(1, 5);
-        List<BCAdmin> list= bcAdminMapper.selectByExample(new BCAdminExample());
-        PageInfo pageInfo = new PageInfo(list);
+        List<BCAdmin> list= bcAdminMapper.selectByExample(bcAdminExample);
+//        PageInfo pageInfo = new PageInfo(list);
         Page page = (Page) list;
-        System.out.println("PageInfo: " + JSON.toJSONString(pageInfo));
+//        System.out.println("PageInfo: " + JSON.toJSONString(pageInfo));
         System.out.println("PageInfo: " + JSON.toJSONString(page));
 
     }

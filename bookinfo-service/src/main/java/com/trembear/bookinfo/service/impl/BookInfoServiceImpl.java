@@ -100,7 +100,7 @@ public class BookInfoServiceImpl
     }
 
     @Override
-    public BookDetailDto getBookDetail(long id) {
+    public BookDetailDto getBookDetail(Long id) {
         /**
          * TODO
          * 1、获取book信息
@@ -121,7 +121,7 @@ public class BookInfoServiceImpl
     }
 
     @Override
-    public RestFulVO deleteBook(long id) {
+    public RestFulVO deleteBook(Long id) {
         bookInfoDao.delete(id);
         return new BaseRest().restSuccess("删除图书成功");
     }
@@ -136,10 +136,10 @@ public class BookInfoServiceImpl
          * 3、需要定时想数据库里统计，避免redis服务停止导致的数据丢失？
          */
         if(type==BookInfoConst.YES) {
-            long result= redisTemplate.opsForSet().add(COLLECT+bookId,userId);
+            Long result= redisTemplate.opsForSet().add(COLLECT+bookId,userId);
             return new BaseRest().restSuccess("收藏成功");
         }else{
-            long result=redisTemplate.opsForSet().remove(COLLECT+bookId,userId);
+            Long result=redisTemplate.opsForSet().remove(COLLECT+bookId,userId);
             return new BaseRest().restSuccess("取消收藏成功");
         }
     }

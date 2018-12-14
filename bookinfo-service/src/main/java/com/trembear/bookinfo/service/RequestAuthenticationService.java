@@ -33,7 +33,7 @@ public class RequestAuthenticationService {
            String name=(String)principal;
             if(!name.equals("tom")){
                 logger.info("匿名用户为"+ principal);
-                return false;
+                return true;
             }
             logger.info("String类型正常用户为"+ name);
         }
