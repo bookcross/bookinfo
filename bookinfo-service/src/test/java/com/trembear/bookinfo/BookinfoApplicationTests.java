@@ -13,6 +13,7 @@ import com.trembear.bookinfo.entity.BookInfo;
 import com.trembear.bookinfo.entity.BookReply;
 import com.trembear.bookinfoapi.dto.BookDto;
 import com.trembear.bookinfoapi.dto.BookReplyDto;
+import com.trembear.bookinfoapi.dto.PicFileDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,9 +66,13 @@ public void mongoTest(){
     public void bookTest(){
 //        Map condition = new HashMap<String, String>();
 //        condition.put("isDelete", "0");
-        List<BookInfo> list3 = demoDao.pageList(1, 2, null, new Sort(Sort.Direction.DESC, "id"));
+        List<BookInfo> list3 = demoDao.pageList(1, 100, null, new Sort(Sort.Direction.DESC, "id"));
         for (BookInfo bookInfo:list3) {
-            demoDao.delete(bookInfo.getId());
+//            demoDao.delete(bookInfo.getId());
+            List<PicFileDto> list=(List<PicFileDto>) JSON.parseArray(bookInfo.getBookPic(),PicFileDto.class);
+            for (PicFileDto picFileDto:list)
+                System.out.println(picFileDto.getUrl());
+            System.out.println(bookInfo.getId()+"---"+bookInfo.getBookName());
         }
     }
 

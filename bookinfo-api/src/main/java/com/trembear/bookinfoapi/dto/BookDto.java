@@ -33,9 +33,9 @@ public class BookDto {
     //作者
     private String author;
     //类型
-    private String type;
+    private String bookType;
     //适合年龄
-    private String suitbleAge;
+    private String suitableAge;
     //精度
     private String addressJ;
     //维度
@@ -45,7 +45,7 @@ public class BookDto {
     //评论数
     private Integer replayNum;
     //位置
-    private String locaion;
+    private String address;
     //可以借书的时间
     private Date canCrossDate;
     private Date createdDate;
@@ -113,20 +113,20 @@ public class BookDto {
         this.author = author;
     }
 
-    public String getType() {
-        return type;
+    public String getBookType() {
+        return bookType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setBookType(String bookType) {
+        this.bookType = bookType;
     }
 
-    public String getSuitbleAge() {
-        return suitbleAge;
+    public String getSuitableAge() {
+        return suitableAge;
     }
 
-    public void setSuitbleAge(String suitbleAge) {
-        this.suitbleAge = suitbleAge;
+    public void setSuitableAge(String suitableAge) {
+        this.suitableAge = suitableAge;
     }
 
     public Integer getCollectionNum() {
@@ -145,12 +145,12 @@ public class BookDto {
         this.replayNum = replayNum;
     }
 
-    public String getLocaion() {
-        return locaion;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocaion(String locaion) {
-        this.locaion = locaion;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getCanCrossDate() {

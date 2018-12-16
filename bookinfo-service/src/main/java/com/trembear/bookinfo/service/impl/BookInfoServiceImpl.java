@@ -1,4 +1,5 @@
 package com.trembear.bookinfo.service.impl;
+import com.alibaba.fastjson.JSON;
 import com.trembear.bookinfo.BookInfoConst;
 import com.trembear.bookinfo.common.vo.BaseRest;
 import com.trembear.bookinfo.common.vo.PageDetail;
@@ -17,11 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -116,6 +113,14 @@ public class BookInfoServiceImpl
     public RestFulVO addBook(BookDto bookDto) {
         BookInfo bookInfo=new BookInfo();
         BeanUtils.copyProperties(bookDto,bookInfo);
+        bookInfo.setLocaion(bookDto.getAddress());
+        bookInfo.setBookHeadImg(bookDto.getPicList().get(0).getUrl());
+        bookInfo.setBookPic(JSON.toJSONString(bookDto.getPicList()));
+        bookInfo.setCanLend("1");
+        bookInfo.setBookOwner("xxxx");
+        bookInfo.setCanCrossDate(new Date());
+        bookInfo.setIsDelete("0");
+        bookInfo.setType(bookDto.getBookType());
         bookInfoDao.save(bookInfo);
         return new BaseRest().restSuccess("保存书籍成功");
     }
