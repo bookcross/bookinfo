@@ -17,7 +17,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.net.HttpCookie;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 
@@ -32,7 +37,7 @@ public class BookInfoServiceImpl
         implements BookInfoService{
     private static final Logger LOGGER = LoggerFactory.getLogger(BookInfoServiceImpl.class);
     private static String CREATETIME="createTime";
-    private static String CANBRORROW="canBorrow";
+    private static String CANBRORROW="canLend";
     private static String ISDELETE="isDelete";
     private static String BOOKNAME="bookName";
     private static String AUTHOR="author";
@@ -57,7 +62,7 @@ public class BookInfoServiceImpl
         List<BookInfo> list=new ArrayList<>();
         Long total=null;
         Map<String,Object> condition=new HashMap<>();
-//        condition.put(ISDELETE,BookInfoConst.ISDELETE_FALSE);
+        condition.put(ISDELETE,BookInfoConst.ISDELETE_FALSE);
         if(type.equals(BookInfoConst.LIST_TYPE_ALL)){
             list=bookInfoDao.pageList(pageNum,pageSize,condition,new Sort(Sort.Direction.DESC,CREATETIME));
             total = bookInfoDao.recordTotal(condition);
@@ -66,9 +71,21 @@ public class BookInfoServiceImpl
             list=bookInfoDao.pageList(pageNum,pageSize,condition,new Sort(Sort.Direction.DESC,CREATETIME));
             total = bookInfoDao.recordTotal(condition);
         }
+        /**
+         * bookInfo.setLocaion(bookDto.getAddress());
+         *         bookInfo.setBookHeadImg(bookDto.getPicList().get(0).getUrl());
+         *         bookInfo.setBookPic(JSON.toJSONString(bookDto.getPicList()));
+         *         bookInfo.setCanLend("1");
+         *         bookInfo.setBookOwner("xxxx");
+         *         bookInfo.setCanCrossDate(new Date());
+         *         bookInfo.setIsDelete("0");
+         *         bookInfo.setType(bookDto.getBookType());
+         */
+
         for(BookInfo bookInfo:list){
             BookDto bookDto=new BookDto();
             BeanUtils.copyProperties(bookInfo,bookDto);
+            bookDto.setAddress(bookInfo.getLocaion());
             bookDtos.add(bookDto);
         }
         return new PageDetail<BookDto>(bookDtos, pageNum, pageSize, total);
@@ -111,12 +128,14 @@ public class BookInfoServiceImpl
 
     @Override
     public RestFulVO addBook(BookDto bookDto) {
+        Cookie[] cookies = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getCookies();
         BookInfo bookInfo=new BookInfo();
         BeanUtils.copyProperties(bookDto,bookInfo);
         bookInfo.setLocaion(bookDto.getAddress());
         bookInfo.setBookHeadImg(bookDto.getPicList().get(0).getUrl());
         bookInfo.setBookPic(JSON.toJSONString(bookDto.getPicList()));
         bookInfo.setCanLend("1");
+
         bookInfo.setBookOwner("xxxx");
         bookInfo.setCanCrossDate(new Date());
         bookInfo.setIsDelete("0");

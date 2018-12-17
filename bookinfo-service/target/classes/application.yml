@@ -36,10 +36,10 @@ security:
     enabled: false
   oauth2:
     client:
-      access-token-uri: http://localhost:1001/oauth/token
-      user-authorization-uri: http://localhost:1001/oauth/authorize
+      access-token-uri: http://localhost:5005/oauth/token
+      user-authorization-uri: http://localhost:5005/oauth/authorize
     resource:
-      user-info-uri: http://localhost:1001/user/me
+      user-info-uri: http://localhost:5005/user/me
 #mybatis:
 #  mapper-locations: classpath:mapper/*.xml
 #  type-aliases-package: com.trembear.entity

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 /**
  * @author Junwei.Xiong
  * @description
@@ -24,7 +26,7 @@ public interface BookInfoService {
       * collect
       * updateBook
       */
-     PageDetail<BookDto> getPageDetail(Integer type,Integer pageNum,Integer pageSize);
+     PageDetail<BookDto> getPageDetail(Integer type, Integer pageNum, Integer pageSize);
      PageDetail<BookDto> searchBook( Integer type,String keyword, Integer pageNum,Integer pageSize);
      BookDetailDto getBookDetail(Long id);
      RestFulVO<String> addBook(BookDto bookDto);

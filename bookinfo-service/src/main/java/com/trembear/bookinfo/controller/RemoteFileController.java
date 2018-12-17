@@ -36,7 +36,6 @@ public class RemoteFileController {
     private String path;
     @Value("${file.url}")
     private String url;
-
     /**
      * 单文件上传
      *

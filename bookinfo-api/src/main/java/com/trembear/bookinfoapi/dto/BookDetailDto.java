@@ -8,4 +8,5 @@ package com.trembear.bookinfoapi.dto;
  */
 public class BookDetailDto {
     //包含信息：图书信息，漂流信息，评论信息
+
 }
