@@ -1,14 +1,8 @@
 package com.trembear.bookinfo.service;
 
-import com.trembear.bookinfo.common.vo.PageDetail;
+import com.trembear.bookinfoapi.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
-import com.trembear.bookinfoapi.dto.BookDetailDto;
 import com.trembear.bookinfoapi.dto.BookDto;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Map;
 
 /**
  * @author Junwei.Xiong
@@ -28,7 +22,7 @@ public interface BookInfoService {
       */
      PageDetail<BookDto> getPageDetail(Integer type, Integer pageNum, Integer pageSize);
      PageDetail<BookDto> searchBook( Integer type,String keyword, Integer pageNum,Integer pageSize);
-     BookDetailDto getBookDetail(Long id);
+     BookDto getBookDetail(Long id);
      RestFulVO<String> addBook(BookDto bookDto);
      RestFulVO<String> deleteBook(Long id);
      RestFulVO<String> collect(Integer bookId,Integer userId,Integer type);

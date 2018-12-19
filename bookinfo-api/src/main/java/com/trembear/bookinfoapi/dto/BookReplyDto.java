@@ -13,14 +13,24 @@ public class BookReplyDto {
     private Long id;
     private Long parentId;
     private Long bookId;
-    private Long senderId;
+    private Integer senderId;
     private String senderName;
+    private String senderLogo;
     private String acceptId;
     private String acceptName;
     private String content;
     private Date createTime;
     private String isDelete;
     private float star;
+    private List<BookReplyDto> bookReplyDtos;
+
+    public String getSenderLogo() {
+        return senderLogo;
+    }
+
+    public void setSenderLogo(String senderLogo) {
+        this.senderLogo = senderLogo;
+    }
 
     public float getStar() {
         return star;
@@ -30,7 +40,6 @@ public class BookReplyDto {
         this.star = star;
     }
 
-    private List<BookReplyDto> bookReplyDtos;
 
     public List<BookReplyDto> getBookReplyDtos() {
         return bookReplyDtos;
@@ -64,11 +73,11 @@ public class BookReplyDto {
         this.bookId = bookId;
     }
 
-    public Long getSenderId() {
+    public Integer getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(Long senderId) {
+    public void setSenderId(Integer senderId) {
         this.senderId = senderId;
     }
 

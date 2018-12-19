@@ -19,13 +19,22 @@ public class BookReply {
     private Long id;
     private Long parentId;
     private Long bookId;
-    private Long senderId;
+    private Integer senderId;
     private String senderName;
-    private String acceptId;
+    private String senderLogo;
+    private Integer acceptId;
     private String acceptName;
     private String content;
     private Date createTime;
     private String isDelete;
+
+    public String getSenderLogo() {
+        return senderLogo;
+    }
+
+    public void setSenderLogo(String senderLogo) {
+        this.senderLogo = senderLogo;
+    }
 
     public Long getId() {
         return id;
@@ -51,11 +60,11 @@ public class BookReply {
         this.bookId = bookId;
     }
 
-    public Long getSenderId() {
+    public Integer getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(Long senderId) {
+    public void setSenderId(Integer senderId) {
         this.senderId = senderId;
     }
 
@@ -67,11 +76,11 @@ public class BookReply {
         this.senderName = senderName;
     }
 
-    public String getAcceptId() {
+    public Integer getAcceptId() {
         return acceptId;
     }
 
-    public void setAcceptId(String acceptId) {
+    public void setAcceptId(Integer acceptId) {
         this.acceptId = acceptId;
     }
 

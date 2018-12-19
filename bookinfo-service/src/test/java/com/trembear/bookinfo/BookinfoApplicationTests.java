@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.trembear.bookinfo.annotation.AutoInc;
 import com.trembear.bookinfo.config.RedisConfig;
 import com.trembear.bookinfo.dao.BCAdminMapper;
 import com.trembear.bookinfo.dao.BookInfoDao;
+import com.trembear.bookinfo.dao.BookReplyDao;
 import com.trembear.bookinfo.entity.BCAdmin;
 import com.trembear.bookinfo.entity.BCAdminExample;
 import com.trembear.bookinfo.entity.BookInfo;
@@ -44,21 +46,16 @@ public class BookinfoApplicationTests {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
-
+    @Autowired
+    private BookReplyDao bookReplyDao;
     @Autowired
     private BCAdminMapper bcAdminMapper;
 @Test
 public void mongoTest(){
-    BookInfo bookInfo=new BookInfo();
-        bookInfo.setId(1L);
-        bookInfo.setAuthor("金庸");
-        bookInfo.setBookName("射雕英雄传");
-        demoDao.save(bookInfo);
-        bookInfo.setId(2L);
-        bookInfo.setAuthor("金庸");
-        bookInfo.setBookName("天龙八部");
-        demoDao.save(bookInfo);
-
+    List<BookReply> bookReplies = bookReplyDao.pageList(1, 5, null);
+    for (BookReply bookReply:bookReplies){
+        System.out.println(bookReplies.get(0));
+    }
 }
 
 
@@ -66,6 +63,7 @@ public void mongoTest(){
     public void bookTest(){
 //        Map condition = new HashMap<String, String>();
 //        condition.put("isDelete", "0");
+
         List<BookInfo> list3 = demoDao.pageList(1, 100, null, new Sort(Sort.Direction.DESC, "id"));
         for (BookInfo bookInfo:list3) {
 //            demoDao.delete(bookInfo.getId());

@@ -13,8 +13,8 @@ public class BookCoinRecoder {
     private Long userId;
     private Long crossRecoderId;
     private String type;//0 系统赠送，1 交易活动
-    private Integer coin;
-    private Integer total;
+    private int coin;
+    private int total;
     private Date createTime;
 
     public Long getId() {
@@ -49,19 +49,19 @@ public class BookCoinRecoder {
         this.type = type;
     }
 
-    public Integer getCoin() {
+    public int getCoin() {
         return coin;
     }
 
-    public void setCoin(Integer coin) {
+    public void setCoin(int coin) {
         this.coin = coin;
     }
 
-    public Integer getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 

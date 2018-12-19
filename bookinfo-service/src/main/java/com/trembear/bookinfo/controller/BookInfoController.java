@@ -1,6 +1,6 @@
 package com.trembear.bookinfo.controller;
 
-import com.trembear.bookinfo.common.vo.PageDetail;
+import com.trembear.bookinfoapi.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
 import com.trembear.bookinfo.service.BookInfoService;
 import com.trembear.bookinfoapi.dto.BookDetailDto;
@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Junwei.Xiong
@@ -29,7 +26,7 @@ public class BookInfoController {
     * Description  //TODO getPageDetail
     * @date 10:55 2018/12/7
     * @param [type, pageNum, pageSize]
-    * @return com.trembear.bookinfo.common.vo.PageDetail
+    * @return com.trembear.bookinfoapi.vo.PageDetail
     **/
     @RequestMapping("/readAll")
     public PageDetail getPageDetail(@RequestParam(value = "type") Integer type,
@@ -42,7 +39,7 @@ public class BookInfoController {
      * Description  //TODO searchBook
      * @date 10:55 2018/12/7
      * @param [field, keyword, pageNum, pageSize]
-     * @return com.trembear.bookinfo.common.vo.PageDetail
+     * @return com.trembear.bookinfoapi.vo.PageDetail
      **/
     @RequestMapping("/searchBook")
     public PageDetail searchBook(
@@ -60,7 +57,7 @@ public class BookInfoController {
      * @return com.trembear.bookinfoapi.dto.BookDetailDto
      **/
     @RequestMapping("/getBookDetail")
-    public BookDetailDto getBookDetail(@RequestParam(value = "id")Long id){
+    public BookDto getBookDetail(@RequestParam(value = "id")Long id){
         return bookInfoService.getBookDetail(id);
     }
     /**

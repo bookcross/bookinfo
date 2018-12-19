@@ -1,15 +1,16 @@
 package com.trembear.bookinfo.controller;
 
-import com.trembear.bookinfo.common.vo.PageDetail;
+import com.trembear.bookinfoapi.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
 import com.trembear.bookinfo.service.BookReplyService;
 import com.trembear.bookinfoapi.dto.BookReplyDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 
 /**
  * description 书评
@@ -27,13 +28,13 @@ public class BookReplyController {
      * Description  //TODO 分页获取书评前五条（包含书评的回复）
      * @date 11:24 2018/12/10
      * @param []
-     * @return com.trembear.bookinfo.common.vo.PageDetail
+     * @return com.trembear.bookinfoapi.vo.PageDetail
      **/
     @RequestMapping("/readAll")
     public PageDetail getPageBookReply(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                        @RequestParam(value = "bookId") Long bookId){
-        return bookReplyService.getPageBookReplay(pageNum,pageSize,bookId);
+        return bookReplyService.getPageBookReplay(pageNum,pageSize,bookId,new HashMap<>());
     }
     /**
      * @author junwei.xiong

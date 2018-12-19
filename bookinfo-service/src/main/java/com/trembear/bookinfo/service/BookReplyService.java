@@ -1,9 +1,10 @@
 package com.trembear.bookinfo.service;
 
-import com.trembear.bookinfo.common.vo.PageDetail;
+import com.trembear.bookinfoapi.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
-import com.trembear.bookinfo.entity.BookReply;
 import com.trembear.bookinfoapi.dto.BookReplyDto;
+
+import java.util.Map;
 
 /**
  * description 图书回复
@@ -17,7 +18,7 @@ public interface BookReplyService {
      * addBookReply
      * deleteBookReply
      */
-    PageDetail<BookReplyDto> getPageBookReplay(int pageNum,int pageSize,Long bookId);
+    PageDetail<BookReplyDto> getPageBookReplay(int pageNum,int pageSize,Long bookId,Map<String,Object> map);
 
     RestFulVO<String> addBookReply(BookReplyDto bookReplyDto);
 

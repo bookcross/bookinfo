@@ -2,12 +2,15 @@ package com.trembear.bookinfo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import javax.servlet.MultipartConfigElement;
 
 @EnableCaching
 @EnableScheduling
@@ -35,4 +38,10 @@ public class BookinfoApplication {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+//    @Bean
+//    MultipartConfigElement multipartConfigElement() {
+//        MultipartConfigFactory factory = new MultipartConfigFactory();
+//        factory.setLocation("/temp");
+//        return factory.createMultipartConfig();
+//    }
 }

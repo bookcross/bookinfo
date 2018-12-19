@@ -1,7 +1,7 @@
 package com.trembear.bookinfo.entity;
 
 public class BCAdmin {
-    private Integer adminid;
+    private int adminid;
 
     private String adminname;
 
@@ -15,13 +15,13 @@ public class BCAdmin {
 
     private String type;
 
-    private Integer createby;
+    private int createby;
 
-    public Integer getAdminid() {
+    public int getAdminid() {
         return adminid;
     }
 
-    public void setAdminid(Integer adminid) {
+    public void setAdminid(int adminid) {
         this.adminid = adminid;
     }
 
@@ -73,11 +73,11 @@ public class BCAdmin {
         this.type = type == null ? null : type.trim();
     }
 
-    public Integer getCreateby() {
+    public int getCreateby() {
         return createby;
     }
 
-    public void setCreateby(Integer createby) {
+    public void setCreateby(int createby) {
         this.createby = createby;
     }
 }

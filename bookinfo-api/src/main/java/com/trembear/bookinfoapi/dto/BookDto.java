@@ -1,5 +1,7 @@
 package com.trembear.bookinfoapi.dto;
 
+import com.trembear.bookinfoapi.vo.PageDetail;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class BookDto {
     //简介
     private String bookConent;
     //书主
-    private String bookOwner;
+    private int bookOwner;
     //作者
     private String author;
     //类型
@@ -41,9 +43,9 @@ public class BookDto {
     //维度
     private String addressW;
     //收藏数
-    private Integer collectionNum;
+    private int collectionNum;
     //评论数
-    private Integer replayNum;
+    private int replayNum;
     //位置
     private String address;
     //可以借书的时间
@@ -56,6 +58,36 @@ public class BookDto {
     private float star;
     //评分人数
     private float starNum;
+    //是否可以收藏
+    private String isCollent;
+    //漂流列表
+    private List<BookCrossRecoderDto> bookCrossRecoderDtos;
+    //漂流
+    private PageDetail<BookReplyDto> bookReplyDtos;
+
+    public String getIsCollent() {
+        return isCollent;
+    }
+
+    public void setIsCollent(String isCollent) {
+        this.isCollent = isCollent;
+    }
+
+    public List<BookCrossRecoderDto> getBookCrossRecoderDtos() {
+        return bookCrossRecoderDtos;
+    }
+
+    public void setBookCrossRecoderDtos(List<BookCrossRecoderDto> bookCrossRecoderDtos) {
+        this.bookCrossRecoderDtos = bookCrossRecoderDtos;
+    }
+
+    public PageDetail<BookReplyDto> getBookReplyDtos() {
+        return bookReplyDtos;
+    }
+
+    public void setBookReplyDtos(PageDetail<BookReplyDto> bookReplyDtos) {
+        this.bookReplyDtos = bookReplyDtos;
+    }
 
     public Long getId() {
         return id;
@@ -97,11 +129,11 @@ public class BookDto {
         this.bookConent = bookConent;
     }
 
-    public String getBookOwner() {
+    public int getBookOwner() {
         return bookOwner;
     }
 
-    public void setBookOwner(String bookOwner) {
+    public void setBookOwner(int bookOwner) {
         this.bookOwner = bookOwner;
     }
 
@@ -129,19 +161,19 @@ public class BookDto {
         this.suitableAge = suitableAge;
     }
 
-    public Integer getCollectionNum() {
+    public int getCollectionNum() {
         return collectionNum;
     }
 
-    public void setCollectionNum(Integer collectionNum) {
+    public void setCollectionNum(int collectionNum) {
         this.collectionNum = collectionNum;
     }
 
-    public Integer getReplayNum() {
+    public int getReplayNum() {
         return replayNum;
     }
 
-    public void setReplayNum(Integer replayNum) {
+    public void setReplayNum(int replayNum) {
         this.replayNum = replayNum;
     }
 

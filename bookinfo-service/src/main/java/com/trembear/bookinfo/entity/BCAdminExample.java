@@ -114,32 +114,32 @@ public class BCAdminExample {
             return (Criteria) this;
         }
 
-        public Criteria andAdminidEqualTo(Integer value) {
+        public Criteria andAdminidEqualTo(int value) {
             addCriterion("adminId =", value, "adminid");
             return (Criteria) this;
         }
 
-        public Criteria andAdminidNotEqualTo(Integer value) {
+        public Criteria andAdminidNotEqualTo(int value) {
             addCriterion("adminId <>", value, "adminid");
             return (Criteria) this;
         }
 
-        public Criteria andAdminidGreaterThan(Integer value) {
+        public Criteria andAdminidGreaterThan(int value) {
             addCriterion("adminId >", value, "adminid");
             return (Criteria) this;
         }
 
-        public Criteria andAdminidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andAdminidGreaterThanOrEqualTo(int value) {
             addCriterion("adminId >=", value, "adminid");
             return (Criteria) this;
         }
 
-        public Criteria andAdminidLessThan(Integer value) {
+        public Criteria andAdminidLessThan(int value) {
             addCriterion("adminId <", value, "adminid");
             return (Criteria) this;
         }
 
-        public Criteria andAdminidLessThanOrEqualTo(Integer value) {
+        public Criteria andAdminidLessThanOrEqualTo(int value) {
             addCriterion("adminId <=", value, "adminid");
             return (Criteria) this;
         }
@@ -154,12 +154,12 @@ public class BCAdminExample {
             return (Criteria) this;
         }
 
-        public Criteria andAdminidBetween(Integer value1, Integer value2) {
+        public Criteria andAdminidBetween(int value1, int value2) {
             addCriterion("adminId between", value1, value2, "adminid");
             return (Criteria) this;
         }
 
-        public Criteria andAdminidNotBetween(Integer value1, Integer value2) {
+        public Criteria andAdminidNotBetween(int value1, int value2) {
             addCriterion("adminId not between", value1, value2, "adminid");
             return (Criteria) this;
         }
@@ -594,32 +594,32 @@ public class BCAdminExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyEqualTo(Integer value) {
+        public Criteria andCreatebyEqualTo(int value) {
             addCriterion("createBy =", value, "createby");
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyNotEqualTo(Integer value) {
+        public Criteria andCreatebyNotEqualTo(int value) {
             addCriterion("createBy <>", value, "createby");
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyGreaterThan(Integer value) {
+        public Criteria andCreatebyGreaterThan(int value) {
             addCriterion("createBy >", value, "createby");
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCreatebyGreaterThanOrEqualTo(int value) {
             addCriterion("createBy >=", value, "createby");
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyLessThan(Integer value) {
+        public Criteria andCreatebyLessThan(int value) {
             addCriterion("createBy <", value, "createby");
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyLessThanOrEqualTo(Integer value) {
+        public Criteria andCreatebyLessThanOrEqualTo(int value) {
             addCriterion("createBy <=", value, "createby");
             return (Criteria) this;
         }
@@ -634,12 +634,12 @@ public class BCAdminExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyBetween(Integer value1, Integer value2) {
+        public Criteria andCreatebyBetween(int value1, int value2) {
             addCriterion("createBy between", value1, value2, "createby");
             return (Criteria) this;
         }
 
-        public Criteria andCreatebyNotBetween(Integer value1, Integer value2) {
+        public Criteria andCreatebyNotBetween(int value1, int value2) {
             addCriterion("createBy not between", value1, value2, "createby");
             return (Criteria) this;
         }

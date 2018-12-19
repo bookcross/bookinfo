@@ -1,14 +1,16 @@
 package com.trembear.bookinfo.service.impl;
 import com.alibaba.fastjson.JSON;
+import com.trembear.authorizationapi.dto.UserDto;
 import com.trembear.bookinfo.BookInfoConst;
 import com.trembear.bookinfo.common.vo.BaseRest;
-import com.trembear.bookinfo.common.vo.PageDetail;
+import com.trembear.bookinfoapi.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
 import com.trembear.bookinfo.dao.BookInfoDao;
 import com.trembear.bookinfo.entity.BookInfo;
 import com.trembear.bookinfo.service.BookInfoService;
-import com.trembear.bookinfoapi.dto.BookDetailDto;
+import com.trembear.bookinfo.service.BookReplyService;
 import com.trembear.bookinfoapi.dto.BookDto;
+import com.trembear.bookinfoapi.dto.PicFileDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -20,11 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.net.HttpCookie;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author Junwei.Xiong
@@ -44,6 +42,8 @@ public class BookInfoServiceImpl
     private static String COLLECT="BOOKCOLLECT_";
     @Autowired
     private BookInfoDao bookInfoDao;
+    @Autowired
+    private BookReplyService bookReplyService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
@@ -114,7 +114,7 @@ public class BookInfoServiceImpl
     }
 
     @Override
-    public BookDetailDto getBookDetail(Long id) {
+    public BookDto getBookDetail(Long id) {
         /**
          * TODO
          * 1、获取book信息
@@ -122,21 +122,30 @@ public class BookInfoServiceImpl
          * 3、获取漂流信息
          * 4、从reids中获取是否收藏信息，存入字段
          */
+       BookInfo bookInfo= bookInfoDao.findById(id);
+       BookDto bookDto=new BookDto();
+       BeanUtils.copyProperties(bookInfo,bookDto);
+       bookDto.setAddress(bookInfo.getLocaion());
+       bookDto.setPicList((List<PicFileDto>) JSON.parseArray(bookInfo.getBookPic(),PicFileDto.class));
+       bookDto.setBookType(bookInfo.getType());
+       PageDetail pageDetail= bookReplyService.getPageBookReplay(1,5,id,new HashMap());
+       bookDto.setBookReplyDtos(pageDetail);
 
-        return null;
+       return bookDto;
     }
 
     @Override
     public RestFulVO addBook(BookDto bookDto) {
-        Cookie[] cookies = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getCookies();
+//        String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
+//        Integer userId=((UserDto)redisTemplate.opsForValue().get(token)).getUserid();
+        Integer userId=1;
         BookInfo bookInfo=new BookInfo();
         BeanUtils.copyProperties(bookDto,bookInfo);
         bookInfo.setLocaion(bookDto.getAddress());
         bookInfo.setBookHeadImg(bookDto.getPicList().get(0).getUrl());
         bookInfo.setBookPic(JSON.toJSONString(bookDto.getPicList()));
         bookInfo.setCanLend("1");
-
-        bookInfo.setBookOwner("xxxx");
+        bookInfo.setBookOwner(userId);
         bookInfo.setCanCrossDate(new Date());
         bookInfo.setIsDelete("0");
         bookInfo.setType(bookDto.getBookType());
