@@ -43,11 +43,11 @@ public class BookInfoController {
      **/
     @RequestMapping("/searchBook")
     public PageDetail searchBook(
-            @RequestParam(value = "field") Integer field,
+            @RequestParam(value = "type") Integer type,
             @RequestParam(value = "keyword") String keyword,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        return bookInfoService.searchBook(field,keyword,pageNum,pageSize);
+        return bookInfoService.searchBook(type,keyword,pageNum,pageSize);
     }
     /**
      * @author junwei.xiong

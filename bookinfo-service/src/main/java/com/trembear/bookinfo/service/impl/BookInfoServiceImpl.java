@@ -1,4 +1,5 @@
 package com.trembear.bookinfo.service.impl;
+
 import com.alibaba.fastjson.JSON;
 import com.trembear.authorizationapi.dto.UserDto;
 import com.trembear.bookinfo.BookInfoConst;
@@ -32,14 +33,14 @@ import java.util.*;
 
 @Service
 public class BookInfoServiceImpl
-        implements BookInfoService{
+        implements BookInfoService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookInfoServiceImpl.class);
-    private static String CREATETIME="createTime";
-    private static String CANBRORROW="canLend";
-    private static String ISDELETE="isDelete";
-    private static String BOOKNAME="bookName";
-    private static String AUTHOR="author";
-    private static String COLLECT="BOOKCOLLECT_";
+    private static String CREATETIME = "createTime";
+    private static String CANBRORROW = "canLend";
+    private static String ISDELETE = "isDelete";
+    private static String BOOKNAME = "bookName";
+    private static String AUTHOR = "author";
+    private static String COLLECT = "BOOKCOLLECT_";
     @Autowired
     private BookInfoDao bookInfoDao;
     @Autowired
@@ -51,24 +52,24 @@ public class BookInfoServiceImpl
 
     /**
      * 调用其他服务示例
-     * */
-    public void demo(){
+     */
+    public void demo() {
 
     }
 
     @Override
     public PageDetail<BookDto> getPageDetail(Integer type, Integer pageNum, Integer pageSize) {
-        List<BookDto> bookDtos=new ArrayList<>();
-        List<BookInfo> list=new ArrayList<>();
-        Long total=null;
-        Map<String,Object> condition=new HashMap<>();
-        condition.put(ISDELETE,BookInfoConst.ISDELETE_FALSE);
-        if(type.equals(BookInfoConst.LIST_TYPE_ALL)){
-            list=bookInfoDao.pageList(pageNum,pageSize,condition,new Sort(Sort.Direction.DESC,CREATETIME));
+        List<BookDto> bookDtos = new ArrayList<>();
+        List<BookInfo> list = new ArrayList<>();
+        Long total = null;
+        Map<String, Object> condition = new HashMap<>();
+        condition.put(ISDELETE, BookInfoConst.ISDELETE_FALSE);
+        if (type.equals(BookInfoConst.LIST_TYPE_ALL)) {
+            list = bookInfoDao.pageList(pageNum, pageSize, condition, new Sort(Sort.Direction.DESC, CREATETIME));
             total = bookInfoDao.recordTotal(condition);
-        }else if(type.equals(BookInfoConst.LIST_TYPE_CANLEND)){
-            condition.put(CANBRORROW,BookInfoConst.CANLEND_TRUE);
-            list=bookInfoDao.pageList(pageNum,pageSize,condition,new Sort(Sort.Direction.DESC,CREATETIME));
+        } else if (type.equals(BookInfoConst.LIST_TYPE_CANLEND)) {
+            condition.put(CANBRORROW, BookInfoConst.CANLEND_TRUE);
+            list = bookInfoDao.pageList(pageNum, pageSize, condition, new Sort(Sort.Direction.DESC, CREATETIME));
             total = bookInfoDao.recordTotal(condition);
         }
         /**
@@ -82,9 +83,9 @@ public class BookInfoServiceImpl
          *         bookInfo.setType(bookDto.getBookType());
          */
 
-        for(BookInfo bookInfo:list){
-            BookDto bookDto=new BookDto();
-            BeanUtils.copyProperties(bookInfo,bookDto);
+        for (BookInfo bookInfo : list) {
+            BookDto bookDto = new BookDto();
+            BeanUtils.copyProperties(bookInfo, bookDto);
             bookDto.setAddress(bookInfo.getLocaion());
             bookDtos.add(bookDto);
         }
@@ -93,22 +94,29 @@ public class BookInfoServiceImpl
 
     @Override
     public PageDetail<BookDto> searchBook(Integer type, String keyword, Integer pageNum, Integer pageSize) {
-        List<BookDto> bookDtos=new ArrayList<>();
-        List<BookInfo> list=new ArrayList<>();
-        Long total=null;
-        Map<String,Object> condition=new HashMap<>();
-        condition.put(ISDELETE,BookInfoConst.ISDELETE_FALSE);
-        if(type.equals(BookInfoConst.SEARCH_TYPE_BOOK)){
-            list=bookInfoDao.search(pageNum,pageSize,condition,BOOKNAME, keyword,new Sort(Sort.Direction.DESC,CREATETIME),null);
+        List<BookDto> bookDtos = new ArrayList<>();
+        List<BookInfo> list = new ArrayList<>();
+        Long total = null;
+        Map<String, Object> condition = new HashMap<>();
+        condition.put(ISDELETE, BookInfoConst.ISDELETE_FALSE);
+        if (type.equals(BookInfoConst.SEARCH_TYPE_BOOK)) {
+            String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
+            String userSerilize= (String) redisTemplate.opsForValue().get(token);
+            UserDto userDto= JSON.parseObject(userSerilize,UserDto.class);
+            condition.put("bookOwner", userDto.getUserid());
+            list = bookInfoDao.pageList(pageNum, pageSize, condition,new Sort(Sort.Direction.DESC, CREATETIME));
             total = bookInfoDao.recordTotal(condition);
-        }else if(type.equals(BookInfoConst.SEARCH_TYPE_AUTHOR)){
-            list=bookInfoDao.search(pageNum,pageSize,condition,AUTHOR, keyword,new Sort(Sort.Direction.DESC,CREATETIME),null);
+        } else if (type.equals(BookInfoConst.SEARCH_TYPE_AUTHOR)) {
+            list = bookInfoDao.search(pageNum, pageSize, condition, AUTHOR, keyword, new Sort(Sort.Direction.DESC, CREATETIME), null);
             total = bookInfoDao.recordTotal(condition);
         }
-        for(BookInfo bookInfo:list){
-            BookDto bookDto=new BookDto();
-            BeanUtils.copyProperties(bookInfo,bookDto);
-            bookDtos.add(bookDto);
+        if (list != null && list.size() > 0) {
+            for (BookInfo bookInfo : list) {
+                BookDto bookDto = new BookDto();
+                BeanUtils.copyProperties(bookInfo, bookDto);
+                bookDto.setAddress(bookInfo.getLocaion());
+                bookDtos.add(bookDto);
+            }
         }
         return new PageDetail<BookDto>(bookDtos, pageNum, pageSize, total);
     }
@@ -122,31 +130,32 @@ public class BookInfoServiceImpl
          * 3、获取漂流信息
          * 4、从reids中获取是否收藏信息，存入字段
          */
-       BookInfo bookInfo= bookInfoDao.findById(id);
-       BookDto bookDto=new BookDto();
-       BeanUtils.copyProperties(bookInfo,bookDto);
-       bookDto.setAddress(bookInfo.getLocaion());
-       bookDto.setPicList((List<PicFileDto>) JSON.parseArray(bookInfo.getBookPic(),PicFileDto.class));
-       bookDto.setBookType(bookInfo.getType());
-       PageDetail pageDetail= bookReplyService.getPageBookReplay(1,5,id,new HashMap());
-       bookDto.setBookReplyDtos(pageDetail);
+        BookInfo bookInfo = bookInfoDao.findById(id);
+        BookDto bookDto = new BookDto();
+        BeanUtils.copyProperties(bookInfo, bookDto);
+        bookDto.setAddress(bookInfo.getLocaion());
+        bookDto.setPicList((List<PicFileDto>) JSON.parseArray(bookInfo.getBookPic(), PicFileDto.class));
+        bookDto.setBookType(bookInfo.getType());
+        PageDetail pageDetail = bookReplyService.getPageBookReplay(1, 5, id, new HashMap());
+        bookDto.setBookReplyDtos(pageDetail);
 
-       return bookDto;
+        return bookDto;
     }
 
     @Override
     public RestFulVO addBook(BookDto bookDto) {
 //        String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
 //        Integer userId=((UserDto)redisTemplate.opsForValue().get(token)).getUserid();
-        Integer userId=1;
-        BookInfo bookInfo=new BookInfo();
-        BeanUtils.copyProperties(bookDto,bookInfo);
+        Integer userId = 1;
+        BookInfo bookInfo = new BookInfo();
+        BeanUtils.copyProperties(bookDto, bookInfo);
         bookInfo.setLocaion(bookDto.getAddress());
         bookInfo.setBookHeadImg(bookDto.getPicList().get(0).getUrl());
         bookInfo.setBookPic(JSON.toJSONString(bookDto.getPicList()));
         bookInfo.setCanLend("1");
         bookInfo.setBookOwner(userId);
         bookInfo.setCanCrossDate(new Date());
+        bookInfo.setCreatedDate(new Date());
         bookInfo.setIsDelete("0");
         bookInfo.setType(bookDto.getBookType());
         bookInfoDao.save(bookInfo);
@@ -168,11 +177,11 @@ public class BookInfoServiceImpl
          * 2、key太多了到时候如何管理（比如清理删除）
          * 3、需要定时想数据库里统计，避免redis服务停止导致的数据丢失？
          */
-        if(type==BookInfoConst.YES) {
-            Long result= redisTemplate.opsForSet().add(COLLECT+bookId,userId);
+        if (type == BookInfoConst.YES) {
+            Long result = redisTemplate.opsForSet().add(COLLECT + bookId, userId);
             return new BaseRest().restSuccess("收藏成功");
-        }else{
-            Long result=redisTemplate.opsForSet().remove(COLLECT+bookId,userId);
+        } else {
+            Long result = redisTemplate.opsForSet().remove(COLLECT + bookId, userId);
             return new BaseRest().restSuccess("取消收藏成功");
         }
     }
@@ -180,8 +189,8 @@ public class BookInfoServiceImpl
 
     @Override
     public RestFulVO updateBook(BookDto bookDto) {
-        BookInfo bookInfo=new BookInfo();
-        BeanUtils.copyProperties(bookDto,bookInfo);
+        BookInfo bookInfo = new BookInfo();
+        BeanUtils.copyProperties(bookDto, bookInfo);
         bookInfoDao.update(bookInfo);
         return new BaseRest().restSuccess("更新书籍成功");
     }
