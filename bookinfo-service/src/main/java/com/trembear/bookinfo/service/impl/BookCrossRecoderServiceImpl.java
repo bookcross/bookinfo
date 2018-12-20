@@ -1,5 +1,7 @@
 package com.trembear.bookinfo.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.trembear.authorizationapi.dto.UserDto;
 import com.trembear.bookinfo.BookInfoConst;
 import com.trembear.bookinfo.common.enums.SystemRest;
 import com.trembear.bookinfo.common.vo.BaseRest;
@@ -12,9 +14,13 @@ import com.trembear.bookinfo.entity.BookCrossRecoder;
 import com.trembear.bookinfo.entity.BookInfo;
 import com.trembear.bookinfo.service.BookCrossRecoderService;
 import com.trembear.bookinfoapi.dto.BookCrossRecoderDto;
+import com.trembear.bookinfoapi.dto.BookDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.awt.print.Book;
 import java.text.SimpleDateFormat;
@@ -35,9 +41,10 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
     BookCrossRecoderDao bookCrossRecoderDao;
     @Autowired
     BookCoinRecoderDao bookCoinRecoderDao;
+    @Autowired
+    RedisTemplate redisTemplate;
     /**
-     * borrowBook
-     * acceptBook
+     * borrowBook：申请借书
      */
     public RestFulVO borrowBook(BookCrossRecoderDto bookCrossRecoderDto){
         /**
@@ -49,6 +56,7 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
         BookInfo bookInfo=bookInfoDao.findById(bookCrossRecoderDto.getBookId());
         Calendar cal = Calendar.getInstance();
         if(bookInfo.getCanLend().equals(BookInfoConst.CANLEND_TRUE)){
+            /**判断金币数量是否足够*/
             if(true){
                 try {
                     BeanUtils.copyProperties(bookCrossRecoderDto,bookCrossRecoder);
@@ -92,5 +100,25 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
         bookCoinRecoder.setCoin(2);
         bookCoinRecoderDao.save(bookCoinRecoder);
         return new RestFulVO(SystemRest.CAN_NOT_LEND);
+    }
+
+    /**
+     * 新书发布
+     */
+    public RestFulVO sendNewBook(BookDto bookDto, BookCrossRecoderDto bookCrossRecoderDto){
+        BookCrossRecoder bookCrossRecoder=new BookCrossRecoder();
+        bookCrossRecoder.setAccept(true);
+        bookCrossRecoder.setSendTime(new Date());
+        bookCrossRecoder.setSend(true);
+        bookCrossRecoder.setBookId(1L);
+        //设置为第一次发布
+        bookCrossRecoder.setType("0");
+        bookCrossRecoder.setAccepterId(bookDto.getBookOwner());
+        bookCrossRecoder.setName(bookDto.getBookName());
+        bookCrossRecoder.setAccepterAddress(bookDto.getAddress());
+        bookCrossRecoder.setAccepterJ(bookDto.getAddressJ());
+        bookCrossRecoder.setAccepterW(bookDto.getAddressW());
+        bookCrossRecoderDao.save(bookCrossRecoder);
+        return new BaseRest().restSuccess("success");
     }
 }

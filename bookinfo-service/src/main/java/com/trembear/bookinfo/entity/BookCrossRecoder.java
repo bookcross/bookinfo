@@ -19,18 +19,45 @@ public class BookCrossRecoder {
     private Long id;
     private Long bookId;
     private String name;
-    private Long senderId;
+    private Integer senderId;
+    private String senderName;
     private String  senderJ;
     private String  senderW;
     private String senderAddress;
-    private Long accepterId;
+    private Integer accepterId;
+    private String accepterName;
     private String accepterJ;
     private String accepterW;
     private String accepterAddress;
     private Date sendTime;
     private Date acceptTime;
+    private String type;//0:新书发布，1，正常漂流
     private boolean isSend;//是否发出
     private boolean isAccept;//是否确认收到
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getAccepterName() {
+        return accepterName;
+    }
+
+    public void setAccepterName(String accepterName) {
+        this.accepterName = accepterName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getSenderJ() {
         return senderJ;
@@ -104,19 +131,19 @@ public class BookCrossRecoder {
         this.name = name;
     }
 
-    public Long getSenderId() {
+    public Integer getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(Long senderId) {
+    public void setSenderId(Integer senderId) {
         this.senderId = senderId;
     }
 
-    public Long getAccepterId() {
+    public Integer getAccepterId() {
         return accepterId;
     }
 
-    public void setAccepterId(Long accepterId) {
+    public void setAccepterId(Integer accepterId) {
         this.accepterId = accepterId;
     }
 

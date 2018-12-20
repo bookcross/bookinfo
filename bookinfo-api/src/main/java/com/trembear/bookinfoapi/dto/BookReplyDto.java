@@ -21,7 +21,7 @@ public class BookReplyDto {
     private String content;
     private Date createTime;
     private String isDelete;
-    private float star;
+    private Float star;
     private List<BookReplyDto> bookReplyDtos;
 
     public String getSenderLogo() {
@@ -32,11 +32,11 @@ public class BookReplyDto {
         this.senderLogo = senderLogo;
     }
 
-    public float getStar() {
+    public Float getStar() {
         return star;
     }
 
-    public void setStar(float star) {
+    public void setStar(Float star) {
         this.star = star;
     }
 

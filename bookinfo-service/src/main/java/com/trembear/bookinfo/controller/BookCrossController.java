@@ -19,4 +19,7 @@ public class BookCrossController {
     public RestFulVO acceptBook(){
         return null;
     }
+    public RestFulVO sendBook(){
+        return null;
+    }
 }

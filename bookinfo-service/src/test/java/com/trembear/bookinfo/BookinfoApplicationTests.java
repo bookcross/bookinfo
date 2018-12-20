@@ -7,10 +7,12 @@ import com.github.pagehelper.PageInfo;
 import com.trembear.bookinfo.annotation.AutoInc;
 import com.trembear.bookinfo.config.RedisConfig;
 import com.trembear.bookinfo.dao.BCAdminMapper;
+import com.trembear.bookinfo.dao.BookCrossRecoderDao;
 import com.trembear.bookinfo.dao.BookInfoDao;
 import com.trembear.bookinfo.dao.BookReplyDao;
 import com.trembear.bookinfo.entity.BCAdmin;
 import com.trembear.bookinfo.entity.BCAdminExample;
+import com.trembear.bookinfo.entity.BookCrossRecoder;
 import com.trembear.bookinfo.entity.BookInfo;
 import com.trembear.bookinfo.entity.BookReply;
 import com.trembear.bookinfoapi.dto.BookDto;
@@ -50,10 +52,12 @@ public class BookinfoApplicationTests {
     private BookReplyDao bookReplyDao;
     @Autowired
     private BCAdminMapper bcAdminMapper;
+    @Autowired
+    private BookCrossRecoderDao bookCrossRecoderDao;
 @Test
 public void mongoTest(){
-    List<BookReply> bookReplies = bookReplyDao.pageList(1, 5, null);
-    for (BookReply bookReply:bookReplies){
+    List<BookCrossRecoder> bookReplies = bookCrossRecoderDao.pageList(1, 5, null);
+    for (BookCrossRecoder bookReply:bookReplies){
         System.out.println(bookReplies.get(0));
     }
 }

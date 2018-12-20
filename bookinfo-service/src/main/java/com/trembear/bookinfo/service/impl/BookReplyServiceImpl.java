@@ -82,19 +82,27 @@ public class BookReplyServiceImpl implements BookReplyService {
         BookReply bookReply = new BookReply();
         BeanUtils.copyProperties(bookReplyDto, bookReply);
         String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
-       String userSerilize= (String) redisTemplate.opsForValue().get(token);
-        UserDto userDto= JSON.parseObject(userSerilize,UserDto.class);
+        String userSerilize = (String) redisTemplate.opsForValue().get(token);
+        UserDto userDto = JSON.parseObject(userSerilize, UserDto.class);
 //        UserDto userDto= new UserDto();
+        bookReplyDto.setSenderId(userDto.getUserid());
+        bookReplyDto.setSenderLogo(userDto.getUserlogo());
+        bookReplyDto.setSenderName(userDto.getUsername());
+        bookReplyDto.setCreateTime(new Date());
         bookReply.setSenderId(userDto.getUserid());
         bookReply.setSenderLogo(userDto.getUserlogo());
         bookReply.setSenderName(userDto.getUsername());
         bookReply.setCreateTime(new Date());
         bookReply.setIsDelete("0");
         bookReplyDao.save(bookReply);
-        if(!addStar(bookReplyDto.getStar(),bookReplyDto.getBookId())){
+        if (bookReplyDto.getStar() == null) {
+            return new BaseRest().restSuccess(bookReplyDto);
+        } else if (!addStar(bookReplyDto.getStar(), bookReplyDto.getBookId())) {
             LOGGER.error("存入回复出现异常");
-        };
-        return new BaseRest().restSuccess("保存评论成功");
+        } else {
+
+        }
+        return new BaseRest().restSuccess(bookReplyDto);
     }
 
     @Override

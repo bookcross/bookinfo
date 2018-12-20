@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class BookCoinRecoder {
     private Long id;
-    private Long userId;
+    private Integer userId;
     private Long crossRecoderId;
     private String type;//0 系统赠送，1 交易活动
     private int coin;
@@ -25,11 +25,11 @@ public class BookCoinRecoder {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
