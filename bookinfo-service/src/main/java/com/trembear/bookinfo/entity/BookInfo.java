@@ -14,7 +14,6 @@ import java.util.Date;
 @Document(collection = "bookDoc")
 public class BookInfo {
     @Id
-    @AutoInc
     private Long id;
     private String bookName;
     //标题图
@@ -25,6 +24,8 @@ public class BookInfo {
     private String bookConent;
     //书主
     private int bookOwner;
+    //书主
+    private String bookOwnerName;
     //作者
     private String author;
     //类型
@@ -47,6 +48,14 @@ public class BookInfo {
     private float star;
     //评分人数
     private float starNum;
+
+    public String getBookOwnerName() {
+        return bookOwnerName;
+    }
+
+    public void setBookOwnerName(String bookOwnerName) {
+        this.bookOwnerName = bookOwnerName;
+    }
 
     public Long getId() {
         return id;

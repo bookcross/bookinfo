@@ -58,12 +58,21 @@ public class BookDto {
     private float star;
     //评分人数
     private float starNum;
+    private String bookOwnerName;
     //是否可以收藏
     private String isCollent;
     //漂流列表
     private List<BookCrossRecoderDto> bookCrossRecoderDtos;
     //漂流
     private PageDetail<BookReplyDto> bookReplyDtos;
+
+    public String getBookOwnerName() {
+        return bookOwnerName;
+    }
+
+    public void setBookOwnerName(String bookOwnerName) {
+        this.bookOwnerName = bookOwnerName;
+    }
 
     public String getIsCollent() {
         return isCollent;

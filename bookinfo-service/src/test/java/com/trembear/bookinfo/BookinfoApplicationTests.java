@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.trembear.bookinfo.annotation.AutoInc;
+import com.trembear.bookinfo.common.util.IDUtils;
 import com.trembear.bookinfo.config.RedisConfig;
 import com.trembear.bookinfo.dao.BCAdminMapper;
 import com.trembear.bookinfo.dao.BookCrossRecoderDao;
@@ -56,10 +57,15 @@ public class BookinfoApplicationTests {
     private BookCrossRecoderDao bookCrossRecoderDao;
 @Test
 public void mongoTest(){
-    List<BookCrossRecoder> bookReplies = bookCrossRecoderDao.pageList(1, 5, null);
-    for (BookCrossRecoder bookReply:bookReplies){
-        System.out.println(bookReplies.get(0));
-    }
+        for(int i=0;i<50;i++){
+            long s=15453584344422L;
+            System.out.println(Long.valueOf(IDUtils.generate()));
+
+        }
+//    List<BookCrossRecoder> bookReplies = bookCrossRecoderDao.pageList(1, 5, null);
+//    for (BookCrossRecoder bookReply:bookReplies){
+//        System.out.println(bookReplies.get(0));
+//    }
 }
 
 

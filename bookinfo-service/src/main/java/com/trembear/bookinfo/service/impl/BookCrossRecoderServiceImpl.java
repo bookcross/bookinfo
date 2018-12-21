@@ -60,7 +60,7 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
             if(true){
                 try {
                     BeanUtils.copyProperties(bookCrossRecoderDto,bookCrossRecoder);
-                    bookCrossRecoder.setAccept(true);
+                    bookCrossRecoder.setIsAccept("0");
                     bookCrossRecoder.setSendTime(new Date());
                     bookCrossRecoderDao.save(bookCrossRecoder);
                     cal.set(Calendar.DATE,cal.get(Calendar.DATE)+30);
@@ -89,7 +89,7 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
 
     public RestFulVO acceptBook(BookCrossRecoderDto bookCrossRecoderDto){
         BookCrossRecoder bookCrossRecoder=bookCrossRecoderDao.findById(bookCrossRecoderDto.getId());
-        bookCrossRecoder.setAccept(true);
+        bookCrossRecoder.setIsAccept("1");
         bookCrossRecoder.setAcceptTime(new Date());
         bookCrossRecoderDao.update(bookCrossRecoder);
         BookCoinRecoder bookCoinRecoder=new BookCoinRecoder();
@@ -105,17 +105,19 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
     /**
      * 新书发布
      */
-    public RestFulVO sendNewBook(BookDto bookDto, BookCrossRecoderDto bookCrossRecoderDto){
+    @Override
+    public RestFulVO sendNewBook(BookDto bookDto, UserDto userDto){
         BookCrossRecoder bookCrossRecoder=new BookCrossRecoder();
-        bookCrossRecoder.setAccept(true);
+        bookCrossRecoder.setIsAccept("1");
         bookCrossRecoder.setSendTime(new Date());
-        bookCrossRecoder.setSend(true);
+        bookCrossRecoder.setIsSend("1");
         bookCrossRecoder.setBookId(1L);
         //设置为第一次发布
         bookCrossRecoder.setType("0");
-        bookCrossRecoder.setAccepterId(bookDto.getBookOwner());
+        bookCrossRecoder.setAccepterId(userDto.getUserid());
         bookCrossRecoder.setName(bookDto.getBookName());
         bookCrossRecoder.setAccepterAddress(bookDto.getAddress());
+        bookCrossRecoder.setAccepterName(userDto.getUsername());
         bookCrossRecoder.setAccepterJ(bookDto.getAddressJ());
         bookCrossRecoder.setAccepterW(bookDto.getAddressW());
         bookCrossRecoderDao.save(bookCrossRecoder);

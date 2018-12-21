@@ -32,8 +32,8 @@ public class BookCrossRecoder {
     private Date sendTime;
     private Date acceptTime;
     private String type;//0:新书发布，1，正常漂流
-    private boolean isSend;//是否发出
-    private boolean isAccept;//是否确认收到
+    private String isSend;//是否发出
+    private String isAccept;//是否确认收到
 
     public String getSenderName() {
         return senderName;
@@ -163,19 +163,19 @@ public class BookCrossRecoder {
         this.acceptTime = acceptTime;
     }
 
-    public boolean isSend() {
+    public String getIsSend() {
         return isSend;
     }
 
-    public void setSend(boolean send) {
-        isSend = send;
+    public void setIsSend(String isSend) {
+        this.isSend = isSend;
     }
 
-    public boolean isAccept() {
+    public String getIsAccept() {
         return isAccept;
     }
 
-    public void setAccept(boolean accept) {
-        isAccept = accept;
+    public void setIsAccept(String isAccept) {
+        this.isAccept = isAccept;
     }
 }

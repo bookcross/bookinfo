@@ -3,7 +3,9 @@ package com.trembear.bookinfo.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.trembear.authorizationapi.dto.UserDto;
 import com.trembear.bookinfo.BookInfoConst;
+import com.trembear.bookinfo.common.util.IDUtils;
 import com.trembear.bookinfo.common.vo.BaseRest;
+import com.trembear.bookinfo.service.BookCrossRecoderService;
 import com.trembear.bookinfoapi.vo.PageDetail;
 import com.trembear.bookinfo.common.vo.RestFulVO;
 import com.trembear.bookinfo.dao.BookInfoDao;
@@ -49,6 +51,8 @@ public class BookInfoServiceImpl
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private BookCrossRecoderService bookCrossRecoderService;
 
     /**
      * 调用其他服务示例
@@ -144,21 +148,23 @@ public class BookInfoServiceImpl
 
     @Override
     public RestFulVO addBook(BookDto bookDto) {
-//        String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
-//        Integer userId=((UserDto)redisTemplate.opsForValue().get(token)).getUserid();
-        Integer userId = 1;
+        String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
+        UserDto userDto=(UserDto)redisTemplate.opsForValue().get(token);
         BookInfo bookInfo = new BookInfo();
         BeanUtils.copyProperties(bookDto, bookInfo);
         bookInfo.setLocaion(bookDto.getAddress());
         bookInfo.setBookHeadImg(bookDto.getPicList().get(0).getUrl());
         bookInfo.setBookPic(JSON.toJSONString(bookDto.getPicList()));
         bookInfo.setCanLend("1");
-        bookInfo.setBookOwner(userId);
+        bookInfo.setBookOwnerName(userDto.getUsername());
+        bookInfo.setBookOwner(userDto.getUserid());
         bookInfo.setCanCrossDate(new Date());
         bookInfo.setCreatedDate(new Date());
         bookInfo.setIsDelete("0");
         bookInfo.setType(bookDto.getBookType());
+        bookInfo.setId(Long.valueOf(IDUtils.generate()));
         bookInfoDao.save(bookInfo);
+        bookCrossRecoderService.sendNewBook(bookDto,userDto);
         return new BaseRest().restSuccess("保存书籍成功");
     }
 

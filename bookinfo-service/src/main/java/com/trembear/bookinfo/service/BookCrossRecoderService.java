@@ -1,5 +1,9 @@
 package com.trembear.bookinfo.service;
 
+import com.trembear.authorizationapi.dto.UserDto;
+import com.trembear.bookinfo.common.vo.RestFulVO;
+import com.trembear.bookinfoapi.dto.BookDto;
+
 /**
  * description
  *
@@ -11,5 +15,6 @@ public interface BookCrossRecoderService {
      * borrowBook
      * acceptBook
      */
+    RestFulVO sendNewBook(BookDto bookDto, UserDto userDto);
 
 }
