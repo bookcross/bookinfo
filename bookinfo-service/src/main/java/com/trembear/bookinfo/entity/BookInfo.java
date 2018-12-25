@@ -24,8 +24,10 @@ public class BookInfo {
     private String bookConent;
     //书主
     private int bookOwner;
-    //书主
+    //书主姓名
     private String bookOwnerName;
+    private int bookNow;
+    private String bookNowName;
     //作者
     private String author;
     //类型
@@ -38,6 +40,10 @@ public class BookInfo {
     private int replayNum;
     //位置
     private String locaion;
+    //位置
+    private String addressJ;
+    //位置
+    private String addressW;
     //可以借书的时间
     private Date canCrossDate;
     private Date createdDate;
@@ -48,6 +54,38 @@ public class BookInfo {
     private float star;
     //评分人数
     private float starNum;
+
+    public String getAddressJ() {
+        return addressJ;
+    }
+
+    public void setAddressJ(String addressJ) {
+        this.addressJ = addressJ;
+    }
+
+    public String getAddressW() {
+        return addressW;
+    }
+
+    public void setAddressW(String addressW) {
+        this.addressW = addressW;
+    }
+
+    public int getBookNow() {
+        return bookNow;
+    }
+
+    public void setBookNow(int bookNow) {
+        this.bookNow = bookNow;
+    }
+
+    public String getBookNowName() {
+        return bookNowName;
+    }
+
+    public void setBookNowName(String bookNowName) {
+        this.bookNowName = bookNowName;
+    }
 
     public String getBookOwnerName() {
         return bookOwnerName;

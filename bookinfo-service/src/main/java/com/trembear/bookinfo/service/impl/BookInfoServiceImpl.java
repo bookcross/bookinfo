@@ -149,7 +149,8 @@ public class BookInfoServiceImpl
     @Override
     public RestFulVO addBook(BookDto bookDto) {
         String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
-        UserDto userDto=(UserDto)redisTemplate.opsForValue().get(token);
+        String userSerilize = (String) redisTemplate.opsForValue().get(token);
+        UserDto userDto = JSON.parseObject(userSerilize, UserDto.class);
         BookInfo bookInfo = new BookInfo();
         BeanUtils.copyProperties(bookDto, bookInfo);
         bookInfo.setLocaion(bookDto.getAddress());
@@ -163,6 +164,8 @@ public class BookInfoServiceImpl
         bookInfo.setIsDelete("0");
         bookInfo.setType(bookDto.getBookType());
         bookInfo.setId(Long.valueOf(IDUtils.generate()));
+        bookInfo.setBookNow(userDto.getUserid());
+        bookInfo.setBookNowName(userDto.getUsername());
         bookInfoDao.save(bookInfo);
         bookCrossRecoderService.sendNewBook(bookDto,userDto);
         return new BaseRest().restSuccess("保存书籍成功");

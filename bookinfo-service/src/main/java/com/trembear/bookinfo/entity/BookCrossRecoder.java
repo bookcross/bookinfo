@@ -29,11 +29,29 @@ public class BookCrossRecoder {
     private String accepterJ;
     private String accepterW;
     private String accepterAddress;
+    private String message;
     private Date sendTime;
     private Date acceptTime;
+    private Date createTime;
     private String type;//0:新书发布，1，正常漂流
     private String isSend;//是否发出
     private String isAccept;//是否确认收到
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getSenderName() {
         return senderName;

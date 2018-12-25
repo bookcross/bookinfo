@@ -15,8 +15,10 @@ import com.trembear.bookinfo.entity.BookInfo;
 import com.trembear.bookinfo.service.BookCrossRecoderService;
 import com.trembear.bookinfoapi.dto.BookCrossRecoderDto;
 import com.trembear.bookinfoapi.dto.BookDto;
+import com.trembear.bookinfoapi.vo.PageDetail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,8 +26,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.awt.print.Book;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * description
@@ -46,7 +52,8 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
     /**
      * borrowBook：申请借书
      */
-    public RestFulVO borrowBook(BookCrossRecoderDto bookCrossRecoderDto){
+    @Override
+    public RestFulVO   borrowBook(BookCrossRecoderDto bookCrossRecoderDto){
         /**
          * 1 判断是否可借（图书是否在可借期限内，金币是否足够两个）
          * 2 增加一条记录，
@@ -59,11 +66,36 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
             /**判断金币数量是否足够*/
             if(true){
                 try {
+                    String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
+                    String userSerilize = (String) redisTemplate.opsForValue().get(token);
+                    UserDto userDto = JSON.parseObject(userSerilize, UserDto.class);
                     BeanUtils.copyProperties(bookCrossRecoderDto,bookCrossRecoder);
-                    bookCrossRecoder.setIsAccept("0");
-                    bookCrossRecoder.setSendTime(new Date());
+                    /**
+                     *  Integer senderId;
+                     *  String senderName;
+                     *  String  senderJ;
+                     *  String  senderW;
+                     *  String senderAddress;
+                     *  Integer accepterId;
+                     *  String accepterName;
+                     *  String accepterJ;
+                     *  String accepterW;
+                     *  String accepterAddress;
+                     *  String message;
+                     *  Date sendTime;
+                     *  Date acceptTime;
+                     */
+                    bookCrossRecoder.setSenderId(bookInfo.getBookNow());
+                    bookCrossRecoder.setSenderName(bookInfo.getBookNowName());
+                    bookCrossRecoder.setSenderJ(bookInfo.getAddressJ());
+                    bookCrossRecoder.setSenderW(bookInfo.getAddressW());
+                    bookCrossRecoder.setSenderAddress(bookInfo.getLocaion());
+                    bookCrossRecoder.setAccepterId(userDto.getUserid());
+                    bookCrossRecoder.setAccepterName(userDto.getUsername());
+                    bookCrossRecoder.setType("1");
+                    bookCrossRecoder.setCreateTime(new Date());
                     bookCrossRecoderDao.save(bookCrossRecoder);
-                    cal.set(Calendar.DATE,cal.get(Calendar.DATE)+30);
+                    cal.set(Calendar.DATE,cal.get(Calendar.DATE)+50);
                     bookInfo.setCanCrossDate(cal.getTime());
                     bookInfo.setCanLend(BookInfoConst.CANLEND_FALSE);
                     bookInfoDao.save(bookInfo);
@@ -87,6 +119,12 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
 
     }
 
+    /**
+     * 点击收书按钮
+     * @param bookCrossRecoderDto
+     * @return
+     */
+    @Override
     public RestFulVO acceptBook(BookCrossRecoderDto bookCrossRecoderDto){
         BookCrossRecoder bookCrossRecoder=bookCrossRecoderDao.findById(bookCrossRecoderDto.getId());
         bookCrossRecoder.setIsAccept("1");
@@ -99,7 +137,20 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
         bookCoinRecoder.setCreateTime(new Date());
         bookCoinRecoder.setCoin(2);
         bookCoinRecoderDao.save(bookCoinRecoder);
-        return new RestFulVO(SystemRest.CAN_NOT_LEND);
+        //个人金币加2
+        return new RestFulVO(SystemRest.SUCCESS);
+    }
+    /**
+     * 发送书籍按钮
+     */
+    @Override
+    public RestFulVO sendBook(BookCrossRecoderDto bookCrossRecoderDto){
+        BookCrossRecoder bcr=new BookCrossRecoder();
+        BeanUtils.copyProperties(bookCrossRecoderDto,bcr);
+        bcr.setIsSend("1");
+        bcr.setSendTime(new Date());
+        bookCrossRecoderDao.update(bcr);
+        return new RestFulVO(SystemRest.SUCCESS);
     }
 
     /**
@@ -122,5 +173,37 @@ public class BookCrossRecoderServiceImpl implements BookCrossRecoderService {
         bookCrossRecoder.setAccepterW(bookDto.getAddressW());
         bookCrossRecoderDao.save(bookCrossRecoder);
         return new BaseRest().restSuccess("success");
+    }
+
+    /**
+     * 查询所有
+     */
+    @Override
+    public PageDetail searchByCondition(String type, Integer pageNum, Integer pageSize){
+        String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization").split("Bearer ")[1];
+        String userSerilize = (String) redisTemplate.opsForValue().get(token);
+        UserDto userDto = JSON.parseObject(userSerilize, UserDto.class);
+        Map<String, Object> condition = new HashMap<>();
+        List<BookCrossRecoder> bookCrossRecoders=null;
+        condition.put("type","1");
+        //查询
+        if(type.equals("0")){
+            condition.put("senderId", userDto.getUserid());
+            bookCrossRecoders=bookCrossRecoderDao.findByCondition(condition,new Sort(Sort.Direction.DESC, "isSend"));
+        }else {
+            condition.put("accepterId", userDto.getUserid());
+            bookCrossRecoders=bookCrossRecoderDao.findByCondition(condition,new Sort(Sort.Direction.DESC, "isAccept"));
+        }
+        List<BookCrossRecoderDto> bookCrossRecoderDtos=new ArrayList<>();
+        if (bookCrossRecoders != null && bookCrossRecoders.size() > 0) {
+            for (BookCrossRecoder bookCrossRecoder : bookCrossRecoders) {
+                BookCrossRecoderDto bookCrossRecoderDto = new BookCrossRecoderDto();
+                BeanUtils.copyProperties(bookCrossRecoder, bookCrossRecoderDto);
+                bookCrossRecoderDtos.add(bookCrossRecoderDto);
+            }
+        }
+        Long total = bookCrossRecoderDao.recordTotal(condition);
+        return new PageDetail<BookCrossRecoderDto>(bookCrossRecoderDtos, pageNum, pageSize, total);
+
     }
 }

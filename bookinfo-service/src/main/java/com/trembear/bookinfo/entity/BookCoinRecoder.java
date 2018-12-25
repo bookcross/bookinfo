@@ -1,5 +1,8 @@
 package com.trembear.bookinfo.entity;
 
+import com.trembear.bookinfo.annotation.AutoInc;
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
 /**
@@ -9,6 +12,8 @@ import java.util.Date;
  * since 2018-12-11 13:48
  */
 public class BookCoinRecoder {
+    @Id
+    @AutoInc
     private Long id;
     private Integer userId;
     private Long crossRecoderId;
